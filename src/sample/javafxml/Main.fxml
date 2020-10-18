@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="463.0" prefWidth="1087.0" style="-fx-background-color: #1c3e61;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.javaController.MainController">
+    <children>
+        <TableView fx:id="tvPerson" layoutX="35.0" layoutY="66.0" onMouseClicked="#handleMouseAction" prefHeight="358.0" prefWidth="736.0">
+            <columns>
+                <TableColumn fx:id="colId" prefWidth="32.0" text="ID" />
+                <TableColumn fx:id="colName" prefWidth="107.99996948242188" text="Имя" />
+                <TableColumn fx:id="colLastName" prefWidth="96.00003051757812" text="Фамилия" />
+                <TableColumn fx:id="colYear" prefWidth="81.5999755859375" text="Дата рождения" />
+                <TableColumn fx:id="colDok" prefWidth="74.4000244140625" text="№ Документа" />
+                <TableColumn fx:id="colTel" minWidth="0.0" prefWidth="56.0" text="Телефон" />
+                <TableColumn fx:id="colEmail" prefWidth="104.800048828125" text="Email" />
+                <TableColumn fx:id="colTariff" prefWidth="83.2000732421875" text="Тариф" />
+                <TableColumn fx:id="colPrice" prefWidth="112.0" text="Цена" />
+            </columns>
+        </TableView>
+        <Label layoutX="239.0" layoutY="14.0" text="HOTEL MANAGER" textFill="WHITE">
+            <font>
+                <Font name="Times New Roman Bold" size="36.0" />
+            </font>
+        </Label>
+        <VBox layoutX="790.0" layoutY="92.0" prefHeight="286.0" prefWidth="107.0" spacing="15.0">
+            <children>
+                <Label prefHeight="18.0" prefWidth="34.0" text="ID" textFill="WHITE">
+               <font>
+                  <Font size="11.0" />
+               </font>
+                </Label>
+                <Label prefHeight="18.0" prefWidth="27.0" text="Имя" textFill="WHITE">
+               <font>
+                  <Font size="11.0" />
+               </font>
+                </Label>
+                <Label prefHeight="18.0" prefWidth="62.0" text="Фамилия" textFill="WHITE">
+               <font>
+                  <Font size="11.0" />
+               </font>
+                </Label>
+                <Label prefHeight="18.0" prefWidth="72.0" text="Дата рожд." textFill="WHITE">
+               <font>
+                  <Font size="11.0" />
+               </font>
+                </Label>
+                <Label prefHeight="18.0" prefWidth="72.0" text="№ документа" textFill="WHITE">
+               <font>
+                  <Font size="11.0" />
+               </font>
+                </Label>
+                <Label prefHeight="18.0" prefWidth="72.0" text="Телефон" textFill="WHITE">
+               <font>
+                  <Font size="11.0" />
+               </font>
+                </Label>
+                <Label prefHeight="18.0" prefWidth="72.0" text="email" textFill="WHITE">
+               <font>
+                  <Font size="11.0" />
+               </font>
+                </Label>
+                <Label prefHeight="18.0" prefWidth="72.0" text="Тариф" textFill="WHITE">
+               <font>
+                  <Font size="11.0" />
+               </font>
+                </Label>
+            <Label prefHeight="18.0" prefWidth="90.0" text="Цена номера" textFill="WHITE">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            </children>
+        </VBox>
+        <VBox layoutX="872.0" layoutY="92.0" prefHeight="238.0" prefWidth="192.0" spacing="9.0">
+            <children>
+                <TextField fx:id="tfId" prefHeight="10.0" prefWidth="192.0">
+                    <font>
+                        <Font size="11.0" />
+                    </font></TextField>
+                <TextField fx:id="tfName">
+                    <font>
+                        <Font size="11.0" />
+                    </font></TextField>
+                <TextField fx:id="tfLastName">
+                    <font>
+                        <Font size="11.0" />
+                    </font></TextField>
+                <TextField fx:id="tfYear">
+                    <font>
+                        <Font size="11.0" />
+                    </font></TextField>
+                <TextField fx:id="tfDok" prefHeight="7.0" prefWidth="192.0">
+                    <font>
+                        <Font size="11.0" />
+                    </font></TextField>
+                <TextField fx:id="tfTel">
+                    <font>
+                        <Font size="11.0" />
+                    </font>
+                </TextField>
+                <TextField fx:id="tfEmail">
+                    <font>
+                        <Font size="11.0" />
+                    </font>
+                </TextField>
+            <TextField fx:id="tfTariff">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="tfPrice">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </TextField>
+            </children>
+        </VBox>
+        <Button fx:id="btnInsert" layoutX="805.0" layoutY="397.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="26.0" prefWidth="76.0" style="-fx-background-color: #53b018;" text="Add">
+            <font>
+                <Font name="Times New Roman Bold" size="14.0" />
+            </font>
+            <textFill>
+                <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                    <stops>
+                        <Stop color="#fffefe" />
+                        <Stop color="WHITE" offset="1.0" />
+                    </stops>
+                </RadialGradient>
+            </textFill></Button>
+        <Button fx:id="btnUpdate" layoutX="896.0" layoutY="397.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="26.0" prefWidth="76.0" style="-fx-background-color: #f68709;" text="Update">
+            <font>
+                <Font name="Times New Roman Bold" size="14.0" />
+            </font>
+            <textFill>
+                <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                    <stops>
+                        <Stop color="#fffefe" />
+                        <Stop color="WHITE" offset="1.0" />
+                    </stops>
+                </RadialGradient>
+            </textFill></Button>
+        <Button fx:id="btnDelete" layoutX="989.0" layoutY="397.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="26.0" prefWidth="76.0" style="-fx-background-color: #f34911;" text="Delete" textFill="WHITE">
+            <font>
+                <Font name="Times New Roman Bold" size="14.0" />
+            </font></Button>
+        <Label layoutX="901.0" layoutY="56.0" text="Введите данные" textFill="WHITE">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+    </children>
+</AnchorPane>
