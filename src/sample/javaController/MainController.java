@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -89,7 +91,8 @@ public class MainController implements Initializable {
     @FXML
     private Button btnDelete;
 
-
+    @FXML
+    private TextField filterField;
 
     public MainController() {
 
@@ -112,8 +115,8 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-
         showPerson();
+        search_user();
 
     }
     public Connection getConnection() {
@@ -131,6 +134,7 @@ public class MainController implements Initializable {
     }
     public ObservableList<Person> getPersonList () {
         ObservableList<Person> userList = FXCollections.observableArrayList();
+        ObservableList<Person> datalist = FXCollections.observableArrayList();
         Connection conn = getConnection();
         String query = "SELECT * FROM person";
         Statement st;
@@ -186,6 +190,7 @@ public class MainController implements Initializable {
                 + tfPrice.getText() + ")";
         executeQuery(query);
         showPerson();
+        search_user();
     }
     private void updateRecord() {
         String query = "UPDATE person SET " +
@@ -200,6 +205,7 @@ public class MainController implements Initializable {
                 " WHERE id = " + tfId.getText() + "";
         executeQuery(query);
         showPerson();
+        search_user();
 
     }
     private void deleteButton() {
@@ -207,6 +213,7 @@ public class MainController implements Initializable {
                 + tfId.getText() + "";
         executeQuery(query);
         showPerson();
+        search_user();
     }
 
     private void executeQuery(String query) {
@@ -218,6 +225,7 @@ public class MainController implements Initializable {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+
     }
 
     @FXML
@@ -232,5 +240,72 @@ public class MainController implements Initializable {
         tfEmail.setText("" + user.getEmail());
         tfTariff.setText("" + user.getTariff());
         tfPrice.setText("" + user.getPrice());
+    }
+
+    public ObservableList<Person> getdatalist () {
+        ObservableList<Person> datalist = FXCollections.observableArrayList();
+        Connection conn = getConnection();
+        String query = "SELECT * FROM person";
+        Statement st;
+        ResultSet rs;
+        try {
+            st = conn.createStatement();
+            rs = st.executeQuery(query);
+            Person person;
+            while (rs.next()) {
+                person = new Person(
+                        rs.getInt("ID"),
+                        rs.getString("name"),
+                        rs.getString("lastName"),
+                        rs.getInt("year"),
+                        rs.getInt("dok"),
+                        rs.getInt("tel"),
+                        rs.getString("email"),
+                        rs.getString("tariff"),
+                        rs.getInt("price"));
+                datalist.add(person);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return datalist;
+    }
+
+    @FXML
+    private void search_user() {
+        ObservableList<Person> datalist = getPersonList();
+
+        colId.setCellValueFactory(new PropertyValueFactory<Person,Integer>("id"));
+        colName.setCellValueFactory(new PropertyValueFactory<Person, String>("name"));
+        colLastName.setCellValueFactory(new PropertyValueFactory<Person, String>("lastname"));
+        colYear.setCellValueFactory(new PropertyValueFactory<Person, Integer>("year"));
+        colDok.setCellValueFactory(new PropertyValueFactory<Person, Integer>("dok"));
+        colTel.setCellValueFactory(new PropertyValueFactory<Person, Integer>("tel"));
+        colEmail.setCellValueFactory(new PropertyValueFactory<Person, String>("email"));
+        colTariff.setCellValueFactory(new PropertyValueFactory<Person, String>("tariff"));
+        colPrice.setCellValueFactory(new PropertyValueFactory<Person, Integer>("price"));
+
+        datalist = getPersonList();
+        tvPerson.setItems(datalist);
+        FilteredList<Person> filteredData = new FilteredList<>(datalist, b -> true);
+        filterField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(Person -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+                if (Person.getName().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                    return true;
+                } else if (Person.getLastname().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                    return true;
+                } else if (Person.getTariff().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                    return true;
+                } else
+                    return false;
+            });
+            });
+        SortedList<Person> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(tvPerson.comparatorProperty());
+        tvPerson.setItems(sortedData);
     }
 }
