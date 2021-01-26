@@ -1,18 +1,27 @@
 package sample.BL;
 
 public class Person {
-    protected int id;
-    protected String name;
-    protected String lastname;
-    protected int year;
-    protected int dok;
-    protected int tel;
-    protected String email;
-    protected String tariff;
-    protected int price;
+    private int id;
+    private String name;
+    private String lastname;
+    private int year;
+    private int dok;
+    private int tel;
+    private String email;
+    private String tariff;
+    private int price;
+    private int sale = 30;
 
-    public void price(){
-        System.out.println(getPrice());
+    public int getSale() {
+        return sale;
+    }
+
+    public void setSale(int sale) {
+        this.sale = sale;
+    }
+
+    public Person(int sale) {
+        this.sale = sale;
     }
 
     public int getId() {
@@ -44,8 +53,12 @@ public class Person {
     }
 
     public void setYear(int year) {
-        this.year = year;
+        if (year > 1920)
+            this.year = year;
+        else
+            throw new IllegalArgumentException("Year must greater than or equal to 0");
     }
+
 
     public int getDok() {
         return dok;
@@ -99,5 +112,4 @@ public class Person {
         this.tariff = tariff;
         this.price = price;
     }
-
 }

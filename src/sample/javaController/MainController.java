@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
 import sample.BL.Person;
 
 public class MainController implements Initializable {
@@ -82,6 +83,10 @@ public class MainController implements Initializable {
     @FXML
     private TableColumn<Person, Integer> colPrice;
 
+
+    @FXML
+    private VBox tfBoxPerson;
+
     @FXML
     private Button btnInsert;
 
@@ -94,12 +99,16 @@ public class MainController implements Initializable {
     @FXML
     private TextField filterField;
 
+    @FXML
+    private Button handlePrintInvoice;
+
     public MainController() {
 
     }
 
     @FXML
     private void handleButtonAction(ActionEvent event) {
+
 
         if (event.getSource() == btnInsert) {
             insertRecord();
@@ -109,18 +118,16 @@ public class MainController implements Initializable {
         } else if (event.getSource() == btnDelete) {
             deleteButton();
         }
-
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+       
         showPerson();
         search_user();
-
     }
-    public Connection getConnection() {
 
+    public Connection getConnection() {
         Connection conn;
         try {
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel","root","1234");
@@ -128,13 +135,11 @@ public class MainController implements Initializable {
         } catch (Exception ex) {
             System.out.println("ERROR: " + ex.getMessage());
             return null;
-
         }
-
     }
     public ObservableList<Person> getPersonList () {
         ObservableList<Person> userList = FXCollections.observableArrayList();
-        ObservableList<Person> datalist = FXCollections.observableArrayList();
+        ObservableList<Person> dataList = FXCollections.observableArrayList();
         Connection conn = getConnection();
         String query = "SELECT * FROM person";
         Statement st;
@@ -164,7 +169,6 @@ public class MainController implements Initializable {
 
     public void showPerson() {
         ObservableList<Person> list = getPersonList();
-
         colId.setCellValueFactory(new PropertyValueFactory<Person, Integer>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<Person, String>("name"));
         colLastName.setCellValueFactory(new PropertyValueFactory<Person, String>("lastname"));
@@ -174,10 +178,11 @@ public class MainController implements Initializable {
         colEmail.setCellValueFactory(new PropertyValueFactory<Person, String>("email"));
         colTariff.setCellValueFactory(new PropertyValueFactory<Person, String>("tariff"));
         colPrice.setCellValueFactory(new PropertyValueFactory<Person, Integer>("price"));
-
         tvPerson.setItems(list);
     }
+
     private void insertRecord() {
+
         String query = "INSERT INTO person VALUES ("
                 + tfId.getText() + ",'"
                 + tfName.getText() + "','"
@@ -192,6 +197,7 @@ public class MainController implements Initializable {
         showPerson();
         search_user();
     }
+
     private void updateRecord() {
         String query = "UPDATE person SET " +
                 "name = '" + tfName.getText() +
@@ -200,14 +206,14 @@ public class MainController implements Initializable {
                 "', dok = '" + tfDok.getText() +
                 "', tel = '" + tfTel.getText() +
                 "', email = '" + tfEmail.getText() +
-                "', tariff =' " + tfTariff.getText() +
+                "', tariff ='" + tfTariff.getText() +
                 "', price = "  + tfPrice.getText() +
                 " WHERE id = " + tfId.getText() + "";
         executeQuery(query);
         showPerson();
         search_user();
-
     }
+
     private void deleteButton() {
         String query = "DELETE FROM person WHERE id = "
                 + tfId.getText() + "";
@@ -225,8 +231,7 @@ public class MainController implements Initializable {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
-    }
+      }
 
     @FXML
     private void handleMouseAction(javafx.scene.input.MouseEvent mouseEvent) {
@@ -242,7 +247,7 @@ public class MainController implements Initializable {
         tfPrice.setText("" + user.getPrice());
     }
 
-    public ObservableList<Person> getdatalist () {
+    public ObservableList<Person> getDataList () {
         ObservableList<Person> datalist = FXCollections.observableArrayList();
         Connection conn = getConnection();
         String query = "SELECT * FROM person";
@@ -274,7 +279,6 @@ public class MainController implements Initializable {
     @FXML
     private void search_user() {
         ObservableList<Person> datalist = getPersonList();
-
         colId.setCellValueFactory(new PropertyValueFactory<Person,Integer>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<Person, String>("name"));
         colLastName.setCellValueFactory(new PropertyValueFactory<Person, String>("lastname"));
